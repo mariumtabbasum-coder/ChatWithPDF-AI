@@ -4,8 +4,10 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / '.env')
-UPLOAD_DIR = BASE_DIR / 'uploads'
-DATA_DIR = BASE_DIR / 'data'
+RUNTIME_DIR = Path('/tmp/chatwithpdf') if os.getenv('VERCEL') else BASE_DIR
+UPLOAD_DIR = RUNTIME_DIR / 'uploads'
+DATA_DIR = RUNTIME_DIR / 'data'
+RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
 UPLOAD_DIR.mkdir(exist_ok=True)
 DATA_DIR.mkdir(exist_ok=True)
 DB_PATH = DATA_DIR / 'app.db'

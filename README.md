@@ -13,7 +13,7 @@ A Flask-based PDF intelligence app with a forest/sage/linen workspace UI, Gemini
 - Two-document comparison
 - Saved generated insights
 - Responsive sidebar navigation and mobile layouts
-- SQLite metadata and persistent ChromaDB vector storage
+- SQLite metadata and vector storage
 
 ## Setup (Windows PowerShell)
 ```powershell
@@ -37,7 +37,7 @@ If the dashboard loads but upload or chat reports a Gemini error, check that `GE
 - The app uses the Gemini model names configured in `.env`. If the primary chat model returns a temporary 503 overload, chat, notes and comparison retry with `GEMINI_FALLBACK_CHAT_MODEL` (defaults to `gemini-3.8-flash`). Availability depends on your Google AI account and API access.
 - Text-based PDFs are supported. Scanned/image-only PDFs require OCR, which is not included.
 - Embedding calls are currently sequential; large PDFs can take time and may encounter provider rate limits.
-- SQLite and ChromaDB are stored under `data/`, and PDFs under `uploads/`. Use persistent storage for deployment; ephemeral serverless filesystems will lose data.
+- SQLite metadata and vectors are stored under `data/`, and PDFs under `uploads/`. Vercel uses its writable `/tmp` directory; serverless storage is ephemeral, so uploaded documents are lost when an instance is recycled. Use a hosted database and object storage for persistent deployment.
 - This is a local single-user starter, not a production multi-tenant service. Add authentication, authorization, CSRF protection, rate limiting, background jobs and stricter file lifecycle controls before public deployment.
 - PDF.js is loaded from a CDN in the workspace page; an internet connection is required for that viewer dependency.
 - API keys belong only in `.env`; never commit or share it.
